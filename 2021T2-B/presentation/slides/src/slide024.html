@@ -1,5 +1,5 @@
 <html>
-<head><title>2021 Thesis B Presentation (27)</title>
+<head><title>2021 Thesis B Presentation (24)</title>
 <link href='slides.css' rel='stylesheet' type='text/css'>
 <script language="JavaScript">
 // <!--
@@ -25,6 +25,23 @@ document.onkeypress = getKey;
 <div align='center'><table height='95%' width='92%'><tr><td valign='top'>
 
 <div align="center" style="left: 50%; top: 50%;"><h1 style="color: green;">Code Demo</h1></div>
+
+<p>
+	The demo will be three parts.
+	<ul>
+		<li> Run roottask both on qemu and the emulation framework 
+			<ul><li> Compare and show results are the same.</ul>
+		<li> Run kernel emulator independently and debug roottask.
+			<ul>
+				<li> Show the seL4 emulation runtime library setup routine.</li>
+				<li> Show the emulation of seL4 IPC calls.</li></ul>
+		<li> Debug roottask and kernel emulator simultaneously.
+			<ul>
+				<li> Show how we emulate the <b>context switching</b>.</li>
+				<li> Show <b>smooth switch</b> between kernel emulator and the roottask.</li>
+			</ul>
+	</ul>
+</p>
 
 </td></tr></table></div>
 </body>
