@@ -1,0 +1,53 @@
+<html>
+<head><title>2021 Thesis B Presentation (2)</title>
+<link href='slides.css' rel='stylesheet' type='text/css'>
+<script language="JavaScript">
+// <!--
+function getKey(keyStroke) {
+	isNetscape = (navigator.appName.indexOf('Netscape') == 0)
+	eventChooser = (isNetscape) ? keyStroke.which : event.keyCode;
+	which = String.fromCharCode(eventChooser);
+	if (which == ' ') window.location = "slide003.html";
+	if (which == 'n') window.location = "slide003.html";
+	if (which == 'h') window.location = "slide000.html";
+	if (which == 'b') window.location = "slide001.html";
+}
+document.onkeypress = getKey;
+// -->
+</script>
+
+</head>
+<body>
+<a href="slide001.html"><img border=0 alt="[prev]" src="icon/prev.gif"></a>
+<a href="slide001.html"><span style="font-size:14pt;">2</span></a>
+<a href="slide003.html"><img border=0 alt="[next]" src="icon/next.gif"></a>
+
+<div align='center'><table height='95%' width='92%'><tr><td valign='top'>
+<div align='center'><h3>Project Recap</h3></div>
+
+<h4>What is the project about?</h4>
+
+<p>Implement a <strong>compatibility layer</strong> so that we can directly run seL4 applications on Linux without machine emulation or virtualization. (Here we define seL4 applications are applications that are linked to seL4 libraries and use seL4 functionalities. In the seL4 world, they are called seL4 threads) In the rest of the slides, term clients refer to seL4 applications aka seL4 threads. Server refers to the kernel emulator. 
+</p>
+
+<h4>What are the benefits?</h4>
+
+Developing:
+<ul>
+<li> an easy way for rapid prototyping an application in Linux environment.
+<li> use Linux tools directly. <small>(e.g. GDB, valgrind, strace, etc.)</small></li>
+<li> Access to Linux system’s rich input and output <small>(e.g. Files, Networking etc.)</small>. Instead of developing a device-specific driver, we can implement a special seL4 sever application that has direct access to Linux I/O.
+</ul>
+
+Self-learning:
+<ul>
+<li> Learning a lot of things during the project
+</ul>
+
+
+<h4>The expected outcome</h4>
+With the emulation framework, we should achieve at least <strong>source compatibility</strong>, meaning that after recompiling the seL4 application source code. We can run the application successfully. Moreover, we can also achieve binary compatibility. However, this is not implemented at the moment and will be discussed in the later slides.
+
+</td></tr></table></div>
+</body>
+</html>

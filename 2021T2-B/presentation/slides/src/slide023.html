@@ -1,0 +1,38 @@
+<html>
+<head><title>2021 Thesis B Presentation (23)</title>
+<link href='slides.css' rel='stylesheet' type='text/css'>
+<script language="JavaScript">
+// <!--
+function getKey(keyStroke) {
+	isNetscape = (navigator.appName.indexOf('Netscape') == 0)
+	eventChooser = (isNetscape) ? keyStroke.which : event.keyCode;
+	which = String.fromCharCode(eventChooser);
+	if (which == ' ') window.location = "slide024.html";
+	if (which == 'n') window.location = "slide024.html";
+	if (which == 'h') window.location = "slide000.html";
+	if (which == 'b') window.location = "slide022.html";
+}
+document.onkeypress = getKey;
+// -->
+</script>
+
+</head>
+<body>
+<a href="slide022.html"><img border=0 alt="[prev]" src="icon/prev.gif"></a>
+<a href="slide001.html"><span style="font-size:14pt;">23</span></a>
+<a href="slide024.html"><img border=0 alt="[next]" src="icon/next.gif"></a>
+
+<div align='center'><table height='95%' width='92%'><tr><td valign='top'>
+<div align='center'><h3>Physical Memory Emulation Implementation</h3></div>
+
+<p>With the mapping method discussed in the previous slide, the kernel can easily access any content on the physical memory by calculating the offset.</p> 
+
+<p>However, for the emulation, there is one challenge. Since the kernel needs to map the physical memory to a very high address, it uses a custom linker script to assign the predetermined address at linking time. Hence, our <b>text</b>, <b>bss</b> as well as the <b>data</b> section will also be assigned those high virtual addresses. But this will not work on Linux as the Linux kernel doesn't allow us to use those high virtual memory areas.</p>
+
+<p>To solve this we are going to map a shared memory in the kernel emulator address space, and use this as a 1:1 mapping to the emulated physical memory.</p>
+
+
+
+</td></tr></table></div>
+</body>
+</html>

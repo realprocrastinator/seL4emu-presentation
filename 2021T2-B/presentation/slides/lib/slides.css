@@ -1,0 +1,20 @@
+body {font-size:18pt;font-family:sans-serif;background-color:#FFFFFF;margin-top:1px;}
+a {color:#000099; text-decoration:none}
+td {font-size:18pt;}
+h2 {color:#339999;font-size:32pt;font-weight:normal;margin-top:0px;}
+h3 {color:#339999;font-size:24pt;font-weight:normal;margin-top:0px;}
+ul {margin-top:0px;}
+li {margin-top:16px;}
+li.s {margin-top:6px;}
+li.i {margin-top:3px;}
+small {font-size:16pt;}
+big {font-size:22pt;}
+code {font-size:100%;font-family:monospace;font-weight:bold;}
+pre {font-size:16pt;font-family:monospace;margin-bottom:0px;}
+pre.smaller {font-size:16pt;}
+span.cont {color:#006666;font-size:16pt;}
+span.refs {color:#6666FF;font-size:13pt;}
+span.nerd {color:#333399;font-size:24;}
+span.comment {color:#888888;font-size:14pt;}
+.bigbold {font-size:22pt;font-weight:bold;}
+.biggerbold {font-size:24pt;font-weight:bold;}

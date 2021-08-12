@@ -1,0 +1,50 @@
+<html>
+<head><title>2021 Thesis B Presentation (16)</title>
+<link href='slides.css' rel='stylesheet' type='text/css'>
+<script language="JavaScript">
+// <!--
+function getKey(keyStroke) {
+	isNetscape = (navigator.appName.indexOf('Netscape') == 0)
+	eventChooser = (isNetscape) ? keyStroke.which : event.keyCode;
+	which = String.fromCharCode(eventChooser);
+	if (which == ' ') window.location = "slide017.html";
+	if (which == 'n') window.location = "slide017.html";
+	if (which == 'h') window.location = "slide000.html";
+	if (which == 'b') window.location = "slide015.html";
+}
+document.onkeypress = getKey;
+// -->
+</script>
+
+</head>
+<body>
+<a href="slide015.html"><img border=0 alt="[prev]" src="icon/prev.gif"></a>
+<a href="slide001.html"><span style="font-size:14pt;">16</span></a>
+<a href="slide017.html"><img border=0 alt="[next]" src="icon/next.gif"></a>
+
+<div align='center'><table height='95%' width='92%'><tr><td valign='top'>
+<div align='center'><h3>Memory Mapping Emulation Implementation </h3></div>
+
+<h4>What do we want to achieve</h4>
+
+<p> 
+<ul>
+<li> The program execution will stop if the memory access is invalid and without any mapping.
+<li> The program will continue execution after an explicit seL4 mapping invocation.
+<li> Assume we implement a lazy mapping mechanism. The program will stop upon accessing the memory address and the vm fault handler will update the paging structure. Eventually, the faulting program restarts at the faulting instruction and continues.
+</ul>
+
+<h4>How to implement?</h4> 
+
+<ul>
+<li> set up a signal handler during the runtime initial stage.
+<li> the seL4 application tries to access an unmapped memory address. 
+<li> <code>SIGSEGV</code> triggered and invokes the siganl handler routine. 
+<li> the signal handler sends an IPC to the kernel emulator.
+<li> the kernel emulator will verify the mapping and reply.
+<li> the signal handler will check the reply. It will either map the faulting address by using <code>MAP_FIXED</code> then return back to the previous context or halt the program execution.
+</ul>
+
+</td></tr></table></div>
+</body>
+</html>

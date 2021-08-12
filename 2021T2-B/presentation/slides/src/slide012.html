@@ -1,0 +1,49 @@
+<html>
+<head><title>2021 Thesis B Presentation (12)</title>
+<link href='slides.css' rel='stylesheet' type='text/css'>
+<script language="JavaScript">
+// <!--
+function getKey(keyStroke) {
+	isNetscape = (navigator.appName.indexOf('Netscape') == 0)
+	eventChooser = (isNetscape) ? keyStroke.which : event.keyCode;
+	which = String.fromCharCode(eventChooser);
+	if (which == ' ') window.location = "slide013.html";
+	if (which == 'n') window.location = "slide013.html";
+	if (which == 'h') window.location = "slide000.html";
+	if (which == 'b') window.location = "slide011.html";
+}
+document.onkeypress = getKey;
+// -->
+</script>
+
+</head>
+<body>
+<a href="slide011.html"><img border=0 alt="[prev]" src="icon/prev.gif"></a>
+<a href="slide001.html"><span style="font-size:14pt;">12</span></a>
+<a href="slide013.html"><img border=0 alt="[next]" src="icon/next.gif"></a>
+
+<div align='center'><table height='95%' width='92%'><tr><td valign='top'>
+<center><h3>IPC Emulation Protocol </h3></center>
+
+<p>To emulate the seL4 IPC syscalls, we implemented two different protocols at the moment. One follows the seL4 IPC syscall semantic. The other one is used internally by the emulation framework. <small>(e.g. Handshaking with the kernel in runtime setup routine)</small>. The IPC message layout is as follow:</p>
+
+<div align='center'><table height='95%' width='92%' border="2" style="text-align: center;">
+<tr>
+
+<tr><td>Tag</td><td>ID</td><td>Reserved</td><td>Body</td></tr>
+<td>Word Size</td><td>Word Size</td><td>Word Size</td><td>Word Size * n_contextRegisters</td></tr>
+</tr>
+</table></div>
+
+<p>Because in the real seL4 system, after traping into the kernel, all the user context registers are stashed in the tcb structure.<br>
+So we decided to pass an <code>n * word size</code> length message for each emulated IPC invocation, where <code>n = n_contextRegisters</code>. <small>(<code>n_contextRegisters</code> is defined in the arch dependent <code>registerset.h</code>, on x86_64 it is <b>24</b>)<small></p>
+
+<p>
+One challenge is how to deliver other message registers on the IPC Buffer? In the real seL4 system, as the kernel can accessing directly to the seL4 thread's IPC buffer. <small>(explain in later slides)</small>. But for the emulation it's not quite easy to access the kernel emulator and the seL4 threads are running as different processes on Linux <small>(explain in later slides)</small>, they have different address spaces. We need other process communication mechanisms.   
+<ul>
+<li> passing the entire IPC buffer on each emulated seL4 IPC invocation. <samll>(extra 8KB for a round trip of the IPC invocation, will be a horrible overhead for the IPC heavy applications!)</samll> <span style="color: red; font-size: xx-large;">&#x2717;</span>  
+<li> map the IPC Buffer as a shared memory. This approach is quite efficient and solved the problem quite well. As from the seL4 thread's view, it writes to the IPC buffer as usual, however, the kernel emulator can access the seL4 thread's IPC Buffer directly as well. <span style="color: green; font-size: xx-large;">&#10003;</span>
+</ul></p>
+</td></tr></table></div>
+</body>
+</html>

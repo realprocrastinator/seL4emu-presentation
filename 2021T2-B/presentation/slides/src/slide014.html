@@ -1,0 +1,39 @@
+<html>
+<head><title>2021 Thesis B Presentation (14)</title>
+<link href='slides.css' rel='stylesheet' type='text/css'>
+<script language="JavaScript">
+// <!--
+function getKey(keyStroke) {
+	isNetscape = (navigator.appName.indexOf('Netscape') == 0)
+	eventChooser = (isNetscape) ? keyStroke.which : event.keyCode;
+	which = String.fromCharCode(eventChooser);
+	if (which == ' ') window.location = "slide015.html";
+	if (which == 'n') window.location = "slide015.html";
+	if (which == 'h') window.location = "slide000.html";
+	if (which == 'b') window.location = "slide013.html";
+}
+document.onkeypress = getKey;
+// -->
+</script>
+
+</head>
+<body>
+<a href="slide013.html"><img border=0 alt="[prev]" src="icon/prev.gif"></a>
+<a href="slide001.html"><span style="font-size:14pt;">14</span></a>
+<a href="slide015.html"><img border=0 alt="[next]" src="icon/next.gif"></a>
+
+<div align='center'><table height='95%' width='92%'><tr><td valign='top'>
+<div align='center'><h3>Memory Mapping Emulation Challenge</h3></div>
+
+<p>seL4 provides APIs to <b>explicitly</b> map a page. However, it's possible for a user to implements a virtual memory management server for handling the demand mapping, meaning that the actual mapping will be done on the <b>vm fault</b> rather than always mapping on the initial request. The current emulation library can handle both of the situations.</p>
+
+<p>The <font color='#CC0000'>first challenge</font> is that the kernel emulator and the seL4 thread's running in different address spaces, hence, the kernel emulatior <b>can't</b> do mapping for the seL4 thread.</p>
+
+<p>The <font color='#CC0000'> second challenge</font> is emulating the <font color='#0000BB'>lazy mapping</font>, so we don't map a page until we actually touch the page.</p>
+<p>
+
+<p>Remember that the invalid access of memory will generate an exception on the hardware and the exception handler will handle that. In case, we can model interrupts on seL4 using signals because siganls are software interrupts. Also, we have our old friend segmentation fault. <small>(<code>SIGSEGV</code>)</small>. And we can set up a signal handler to emulate the exception handler. <small>(more discussion on next slide)</small></p> 
+
+</td></tr></table></div>
+</body>
+</html>
