@@ -23,24 +23,36 @@ document.onkeypress = getKey;
 <a href="slide008.html"><img border=0 alt="[next]" src="icon/next.gif"></a>
 
 <div align='center'><table height='95%' width='92%'><tr><td valign='top'>
-<center><h3>seL4 Emulation Runtime Library Implementation</h3></center>
+<div align='center'><h3>Minimusllibc Implementation</h3></div>
 
-<h4>What does seL4runtime do?</h4>
+<p>Minimusllibc is a C library <b>only</b> used by the emulation library.</p>
+
+<h4>Current implementation, simple but works :)</h4>
 <p>
-	It sets up the environment first before entering the <code>main</code> function.
-	<ul>
-		<li> <font color='#009900'>Obtain the bootinfo</font>: the seL4 kernel passes the bootinfo as an argument to the roottask, including the first usable slot in cnode, IPC buffer address, etc.
-		<li> <font color='#009900'>Set up the TLS region</font>: the TLS region is used for storing IPC buffer's pointer and per seL4 thread error, CAmkES uses TLS for bookkeeping as well.
-	</ul>
+<ul>
+<li> Port musllibc <samll>(glibc is too complex, porting it is overkill)</samll> and change symbol names. <small>(named <strong>minimusllibc</strong>)</small> <span style="color: green; font-size: xx-large;">&#10003;</span>
+</ul>
 </p>
 
-<h4>Modification</h4>
-
+<h4>Why?</h4>
 <ul>
-<li> <font color='red'>Obtain the bootinfo</font>: instead of passing as a function argument, we map a shared memory to access the bootinfo frame.
-<li> <font color='red'>Setup TLS</font>: instead of kernel set up the TLS region for us, we set up the TLS region by ourselves. <small>(e.g. using <code>FSGSBASE</code> instruction family on x86 if available, otherwise use Linux process control syscalls)</small> 
-<li> <font color='red'>Emulation library internal setup</font>: specific initialization routine to use the emulation library. <small>(Explain in the next slide)</small> 
+	<li> Symbol name confliction with host glibc and seL4 musllibc. <span style="color: red; font-size: xx-large;">&#x2717;</span></li> 
+	<li> Static linking introduces limitations. <span style="color: red; font-size: xx-large;">&#x2717;</span></li>
+	<li> Dynamic loading library depends on glibc, porting one is quite overkill.<span style="color: red; font-size: xx-large;">&#x2717;</span></li> 
 </ul>
+</p>
+
+<h4>The current minimusllibc provides</h4>
+<ul>
+<li> Socket related APIs <small>(e.g. <code>mini_socket</code>, <code>mini_accept</code>, etc.)</small>
+<li> I/O APIs <small>(e.g. <code>mini_write</code>, <code>mini_read</code>, etc.)</small>
+<li> Memory mapping APIs <small>(e.g. <code>mini_mmap</code>, etc.)</small>
+<li> Signal APIs <small>(e.g. <code>mini_sigaction</code>, <code>mini_sigstack</code>, etc.)</small>
+<li> <strong>But not thread safe</strong> <small>(unnecessary at the moment)</small>.
+
+</ul>
+</p>
+
 </td></tr></table></div>
 </body>
 </html>

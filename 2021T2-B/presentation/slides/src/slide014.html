@@ -23,25 +23,34 @@ document.onkeypress = getKey;
 <a href="slide015.html"><img border=0 alt="[next]" src="icon/next.gif"></a>
 
 <div align='center'><table height='95%' width='92%'><tr><td valign='top'>
-<div align='center'><h3>Memory Mapping Emulation Challenge</h3></div>
+<center><h3>seL4 Thread Emulation Implementation
+</h3></center>
 
-<p>The <font color='#CC0000'>first challenge</font> is the emulation is all in the user space, we can't modify the paging structures.</p>
-
-<p>The <font color='#CC0000'> second challenge</font> we want the program to continue execution normally after a seL4 mapping invocation.</p>
-
-<p>The <font color='#CC0000'> third challenge</font> is emulating the <font color='#0000BB'>lazy mapping</font>, so we don't map a page until we touch the page.</p>
-<p>
-
-<p>
-	The current implementation uses <code>signal</code> to solve the challenges:
-	<ul>
-	<li> signals are software interrupts, they are well mapped to the seL4 VM fault emulation.
-	<li> signal handlers can do all the mapping jobs implicitly.
-	<li> after returning from signal handlers the program execution. continues normally.
-	<li> emulating both explicit mapping call or lazy page mapping will work. 
+<p>To emulate the seL4 threads, we have two implementation options: 
+	<ul> 
+		<li> Map each one to a Linux user space <strong>thread</strong>. 
+		<li> Map each one to a Linux user space <strong>process</strong>.
 	</ul>
-</p> 
+</p>
+
+<h4>Trade-offs of mapping to threads</h4>
+
+<p><ul>
+<li class="s"> By default, we share the address spaces. <span style="color: green; font-size: xx-large;">&#10003;</span>, but we can't isolate them. <small>(can't emulate different vspaces)</small><span style="color: red; font-size: xx-large;">&#x2717;</span>
+<li class="s"> Creation/Deletion are relatively light weighted. <span style="color: green; font-size: xx-large;">&#10003;</span>
+<li class="s"> Introduce implementation complexity. <small>(concurrency issues, signal handlings, etc.)</small><span style="color: red; font-size: xx-large;">&#x2717;</span>
+<li class="s"> pthread library already uses TLS, which seL4 is using as well. <span style="color: red; font-size: xx-large;">&#x2717;</span>
+</ul></p>
+
+<h4>Trade-offs of mapping to process</h4>
+<p><ul>
+<li class="s"> Can emulate different vspaces. <span style="color: green; font-size: xx-large;">&#10003;</span></li>
+<li class="s"> Simpler to implement. <span style="color: green; font-size: xx-large;">&#10003;</span>
+</li>
+<li class="s"> Process creation/deletion is relatively heavy. <span style="color: red; font-size: xx-large;">&#x2717;</span></li>
+</ul></p>
 
 </td></tr></table></div>
 </body>
 </html>
+	

@@ -23,35 +23,27 @@ document.onkeypress = getKey;
 <a href="slide014.html"><img border=0 alt="[next]" src="icon/next.gif"></a>
 
 <div align='center'><table height='95%' width='92%'><tr><td valign='top'>
-<center><h3>seL4 Thread Emulation Implementation
-</h3></center>
+<center><h3>seL4 IPC Buffer Emulation</h3></center>
 
-<p>In the real seL4 system, the program execution is modeled as seL4 thread. For the emulation framework, we also have two implementation options, map each seL4 thread to a Linux user space <strong>thread</strong> or a Linux user space <strong>process</strong>.</p>
+<h4>How to pass our IPC Buffer?</h4>
+	<ul>
+		<li> The seL4 thread and the kernel emulator are <b>different Linux processes</b> <small>(explain in later slides)</small>, they have different address spaces.
+		<li> Writing to the IPC buffer should <b>immediately</b> appear on the kernel emulator's view.
+		<li> IPC buffer is <b>4KB size</b>, passing as UDS message can be a significant overhead. <span style="color: red; font-size: xx-large;">&#x2717;</span>
+	</ul>
+</p>
 
-<h4>Trade-offs of mapping to threads</h4>
 
-<p><ul>
-<li class="s"> By default, we share the address spaces. <span style="color: green; font-size: xx-large;">&#10003;</span>, but we can't isolate them. <small>(can't emulate different vspaces)</small><span style="color: red; font-size: xx-large;">&#x2717;</span>
-<li class="s"> creation/deletion are relatively light weighted. <span style="color: green; font-size: xx-large;">&#10003;</span>
-<li class="s"> porting <code>pthread</code> from standard c library is complicated. <span style="color: red; font-size: xx-large;">&#x2717;</span>
-<li class="s"> starting an entire program requires loading the ELF file into the memory first then jumping to the entry point. <span style="color: red; font-size: xx-large;">&#x2717;</span>
-<li class="s"> dealing with concurrency issues. <span style="color: red; font-size: xx-large;">&#x2717;</span>
-<li class="s"> handling signals can be complicated. <span style="color: red; font-size: xx-large;">&#x2717;</span>
-<li class="s"> pthread library already uses TLS, which conflicts with the seL4 system. <span style="color: red; font-size: xx-large;">&#x2717;</span>
-</ul></p>
-
-<h4>Trade-offs of mapping to process</h4>
-<p><ul>
-<li class="s"> can emulate different vspaces. <span style="color: green; font-size: xx-large;">&#10003;</span></li>
-<li class="s"> much fewer concurrency issues. <span style="color: green; font-size: xx-large;">&#10003;</span>
-</li>
-<li class="s"> handling signals is easy. <span style="color: green; font-size: xx-large;">&#10003;</span>
-</li>
-<li class="s"> execution of the entire program is easy. <span style="color: green; font-size: xx-large;">&#10003;</span></li>
-<li class="s"> process creation/deletion is relatively heavy. <span style="color: red; font-size: xx-large;">&#x2717;</span></li>
-<li class="s"> different address spaces require explicit process communication mechanisms for sharing data. <span style="color: red; font-size: xx-large;">&#x2717;</span></li>
-</ul></p>
+<p>
+	The current implementation uses a mapped shared memory to emulate the IPC buffer.
+	<ul>
+	<li> Efficiently pass the content on the IPC buffer. <span style="color: green; font-size: xx-large;">&#10003;</span>
+	<li> <code>Write</code> and <code>Read</code> won't have any concurrency issues. <span style="color: green; font-size: xx-large;">&#10003;</span> </li>
+	<li> Kernel emulators can access the seL4 thread's IPC buffer directly even they are different processes. <span style="color: green; font-size: xx-large;">&#10003;</span>
+	</ul>
+</p>
 
 </td></tr></table></div>
 </body>
 </html>
+	

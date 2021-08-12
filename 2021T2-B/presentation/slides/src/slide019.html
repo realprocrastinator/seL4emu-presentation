@@ -7,10 +7,10 @@ function getKey(keyStroke) {
 	isNetscape = (navigator.appName.indexOf('Netscape') == 0)
 	eventChooser = (isNetscape) ? keyStroke.which : event.keyCode;
 	which = String.fromCharCode(eventChooser);
-	if (which == ' ') window.location = "slide023.html";
-	if (which == 'n') window.location = "slide023.html";
+	if (which == ' ') window.location = "slide020.html";
+	if (which == 'n') window.location = "slide020.html";
 	if (which == 'h') window.location = "slide000.html";
-	if (which == 'b') window.location = "slide021.html";
+	if (which == 'b') window.location = "slide018.html";
 }
 document.onkeypress = getKey;
 // -->
@@ -23,18 +23,19 @@ document.onkeypress = getKey;
 <a href="slide020.html"><img border=0 alt="[next]" src="icon/next.gif"></a>
 
 <div align='center'><table height='95%' width='92%'><tr><td valign='top'>
-<div align='center'><h3>seL4 Kernel Window Mapping</h3></div>
 
-<h4>Kernel window mapping</h4>
+<center><h3>Physical Memory Emulation Implementation
+</h3></center>
 
-<p>The kernel has 1:1 physical memory mapped in the virtual memory. And this mapping is at the base of the kernel window which is 2^64 - 2^39. <small>(assume we are using the x86_64 architecture)</small></p>
-<p>Therefore, teh kernel can easily access any data on the physical memory by adding an offset to the physical address.</p>
-
-<p><center>
-	<img alt="[Diagram:pics/kernel window.svg]" src="pics/kernel window.svg"></img>
-</center></p>
-
-
+<p>
+	The physical memory emulation is also implemented using a 1:1 mapping method.
+	<ul>
+		<li> Use shared memory to emulate the physical memory.
+		<li> Efficiently solved sharing IPC buffers.
+		<li> Efficiently solved passing bootinfo to the rootask.
+		<li> Kernel code modification only involves address the translation part.
+	</ul>
+</p>
 
 </td></tr></table></div>
 </body>

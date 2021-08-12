@@ -23,29 +23,14 @@ document.onkeypress = getKey;
 <a href="slide017.html"><img border=0 alt="[next]" src="icon/next.gif"></a>
 
 <div align='center'><table height='95%' width='92%'><tr><td valign='top'>
-	<div align='center'><h3>Client Side Emulation Library Summary</h3></div>
-	<p>At this stage, we have solved most of the problems regarding the client side emulation library.</p>
-	
-	<ul>
-	<li> emulation runtime library sets up the TLS, IPC Buffer.
-	<li> seL4 IPC emulation implementation using UNIX Domain Sockets to pass the message registers as well as the emulated register set.
-	<li> the IPC emulation library distinguishes the seL4 IPCs and the emulation internal IPCs using two different protocols.
-	<li> memory mapping emulation implementation uses signal handlers to capture the VM fault and might do lazy mapping on-demand or halt the execution.
-	<li> one seL4 thread is mapped to one Linux process.
-	</ul>	
-	
-	<p>However, we haven't discussed the rest of the problems in detail.</p>
-	
-	<ul>
-	<li> How does the kernel emulator run?
-	<li> How does the kernel emulator start the roottask?
-	<li> How do we emulate physical memory?
-	<li> How does the kernel emulator start the roottask?
-	<li> How can kernel distinguish different seL4 applications?
-	<li> How to emulate the scheduling?
-	</ul>
-	<p>
-	The following slides will focus on discussing those questions.
+
+<div align='center'><h3>Memory Mapping Emulation Implementation <span class="cont">(cont)</span></h3></div>
+
+<p>The following diagram illustrates the program flow of the memory mapping emulation. Here we assume <i>0x80000</i> is already mapped by the virtual memory management server. And the paging structure is updated already.</p>
+
+<p><center>
+<img alt="[Diagram:pics/sel4_mem_emu.svg]" src="pics/sel4_mem_emu.svg"></img>
+</center></p>
 
 </td></tr></table></div>
 </body>

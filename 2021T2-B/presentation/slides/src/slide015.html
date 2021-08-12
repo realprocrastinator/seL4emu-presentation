@@ -7,10 +7,10 @@ function getKey(keyStroke) {
 	isNetscape = (navigator.appName.indexOf('Netscape') == 0)
 	eventChooser = (isNetscape) ? keyStroke.which : event.keyCode;
 	which = String.fromCharCode(eventChooser);
-	if (which == ' ') window.location = "slide018.html";
-	if (which == 'n') window.location = "slide018.html";
+	if (which == ' ') window.location = "slide016.html";
+	if (which == 'n') window.location = "slide016.html";
 	if (which == 'h') window.location = "slide000.html";
-	if (which == 'b') window.location = "slide016.html";
+	if (which == 'b') window.location = "slide014.html";
 }
 document.onkeypress = getKey;
 // -->
@@ -23,14 +23,29 @@ document.onkeypress = getKey;
 <a href="slide016.html"><img border=0 alt="[next]" src="icon/next.gif"></a>
 
 <div align='center'><table height='95%' width='92%'><tr><td valign='top'>
+<div align='center'><h3>Memory Mapping Emulation Implementation</h3></div>
 
-<div align='center'><h3>Memory Mapping Emulation Implementation <span class="cont">(cont)</span></h3></div>
+<p>
+Implementation challenges: 
+	<ul>
+		<li> The emulation is all in the user space, we <font color='#CC0000'>can't</font> modify the paging structures.
+		<li> The program should <font color='#CC0000'>continue execution normally</font> after a seL4 mapping invocation.
+		<li> The emulation of <font color='#CC0000'>lazy mapping</font> should also work.
+	</ul>
+</p>
 
-<p>The following diagram illustrates the program flow of the memory mapping emulation. Here we assume <i>0x80000</i> is already mapped by the virtual memory management server. And the paging structure is updated already.</p>
+<p></p>
+<p>
 
-<p><center>
-<img alt="[Diagram:pics/sel4_mem_emu.svg]" src="pics/sel4_mem_emu.svg"></img>
-</center></p>
+<p>
+	Use <code>signal</code> to solve the challenges:
+	<ul>
+	<li> <b>Software interrupts</b> emulate hardware interrupts such as seL4 VM fault.
+	<li> Signal handlers <b>implicitly</b> do mapping jobs.
+	<li> The program execution <b>continues normally</b> after returning from signal handlers.
+	<li> Emulating both explicit mapping calls and lazy page mapping will work. 
+	</ul>
+</p> 
 
 </td></tr></table></div>
 </body>

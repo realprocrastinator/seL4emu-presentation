@@ -26,26 +26,31 @@ document.onkeypress = getKey;
 
 <div align='center'><h3>seL4 Kernel Recap</h3></div>
 
-<h4>Recap on seL4 kernel functionalities</h4>
+<h4>How does kernel access kernel objects?</h4>
 
-<p>For emulating a simple hello world roottask, the minimal requirements of the kernel objects are <b>cnode</b>, <b>vspace</b>, <b>endpoints</b>, and <b>tcb</b>.  
-<ul>
-<li> <b>capability:</b> <code>access rights + reference</code>. With the capability, we can retrieve the <strong>virtual address</strong> of any kernel object and access the object. 
-
-<li> <b>vspace</b>: architecture-dependent paging structures. 
-
-<li> the <b>endpoint</b> facilitates the message-passing communication between threads. 
-
-<li> the <b>tcb</b> represents the seL4 thread structure. <small>(thread state, capability pointer to the IPB buffer, fault, scheduling priority, etc.)</small> 
-</ul>
+<p>
+	use capability <small>(<strong>access rights + reference</strong>)</small> &rArr; memory reference &rArr; any kernel objects on the memory.
 </p>
 
-<h4>Main takeaway:</h4>
+<h4>Kernel window mapping</h4>
 
-<p>Kernel accessing all the kernel objects using virtual addresses as a reference, so we need to emulate <strong>the physical memory mapping area in the kernel window.</strong></p> 
+<p>The kernel has 1:1 physical memory mapped in the virtual memory. 
+	<ul>
+		<li>
+			At the <b>fixed base</b> of the kernel window which is 2^64 - 2^39. <small>(assume we are using the x86_64 architecture)</small>
+		</li>
+		<li>
+			Easily access any data on the physical memory by adding an <b>offset</b> to the physical address.
+		</li>
+	</ul>
 </p>
+
+<p><center>
+	<img alt="[Diagram:pics/kernel window.svg]" src="pics/kernel window.svg"></img>
+</center></p>
 
 </td></tr></table></div>
 
 </body>
 </html>
+		

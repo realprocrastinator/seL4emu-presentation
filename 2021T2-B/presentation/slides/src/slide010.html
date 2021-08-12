@@ -23,38 +23,17 @@ document.onkeypress = getKey;
 <a href="slide011.html"><img border=0 alt="[next]" src="icon/next.gif"></a>
 
 <div align='center'><table height='95%' width='92%'><tr><td valign='top'>
-<div align='center'><h3>seL4 IPC Internals</h3></div>
-
-<h4>What message do we need to pass?</h4>
-Assume we are still on x86_64. By looking at the original seL4 syscall implementation. For example <code>x64_sys_send_recv</code>:
-
-<p><center><table cellpadding='8'><tr><td valign='middle' bgcolor='#DDDDDD'><pre>
-x64_sys_recv(seL4_Word sys, seL4_Word src, seL4_Word *out_badge, 
-	seL4_Word *out_info, seL4_Word *out_mr0, seL4_Word *out_mr1, 
-	seL4_Word *out_mr2, seL4_Word *out_mr3, seL4_Word reply)
-{
-	register seL4_Word mr0 asm("r10");
-	register seL4_Word mr1 asm("r8");
-	register seL4_Word mr2 asm("r9");
-	register seL4_Word mr3 asm("r15");
-	MCS_REPLY_DECL;
-	asm volatile(
-		"movq   %%rsp, %%rbx    \n"
-		"syscall                \n"
-		"movq   %%rbx, %%rsp    \n"
-		: "=D"(*out_badge),
-		"=S"(*out_info),
-		"=r"(mr0),
-		"=r"(mr1),
-		"=r"(mr2),
-		"=r"(mr3)
-		: "d"(sys),
-		"D"(src)
-		MCS_REPLY
-		: "%rcx", "%rbx", "r11", "memory"
-	);
-}
-
+	<div align='center'><h3>seL4 IPC System Call Flow</h3></div>
+	
+	<p>To emulate the seL4 IPC invocation:
+		<ul>
+			<li> Use <font color='#0000BB'>UNIX Domain Sockets</font> to transport IPC messages.
+			<li> <code>Send</code> and <code>receive</code> emulates <b>context switching</b> between the seL4 kernel and the userland.
+		</ul> 
+	</p>
+	<p><center><img  width='600vw' alt="[Diagram:pics/sel4_syscall_flow.svg]" src="pics/sel4_syscall_flow.svg"></img></center></p>
+	
 </td></tr></table></div>
+
 </body>
 </html>

@@ -26,22 +26,26 @@ document.onkeypress = getKey;
 
 	<div align='center'><h3>Kernel Emulator Implementation</h3></div>
 	
-	<p>To implement the kernel emulator, we want to <strong>reuse the kernel code as much as possible</strong> and modify the kernel code as less as possible.</p>
+	<p>To implement the kernel emulator, we want:
+		<ul>
+			<li> Reuse the kernel code <strong>as much as</strong> possible 
+			<li> Modify the kernel code <strong>as less as</strong> possible.
+		</ul>
+	</p>
 	
-	<p>The current implementation has the following modifications:</p> 
+	<p>The current modifications in the kernel:</p> 
 	<ul>
 
-	<li> Provide a new kernel entry point
+	<li> Provide a new kernel entry point.
 		
-	<li> Reuse the boot code to do the initialization work. <small></small>(Collect the bootinfo and set up the kernel objects for the roottask, etc.)</small>
+	<li> Reuse the boot code to do the initialization work. <small>(Collect the bootinfo and set up the kernel objects for the roottask, etc.)</small>
 
-	<li> Dispatch the seL4 IPC message into the <strong>kernel interrupts or syscalls handling routines</strong>. <small>(In seL4, interrupts and exceptions are all handled in one routine and system calls which are entered using syscall instructions will enter a fast syscall routine)</small> 
+	<li> Dispatch the seL4 IPC message into the <strong>kernel interrupts or syscalls handling routines</strong>. 
+		<ul><li><small>(In seL4, interrupts and exceptions are all handled in one routine and system calls which are entered using <b>syscall instructions</b> will enter a <b>fast syscall routine</b>)</small></li></ul> 
 
 	<li> Emulate privilege instructions or bypass them.
 
 	<li> Emulate the <strong>kernel window mapping</strong>.
-		
-	<li> Currently, the scheduling part in the kernel emulator doesn't do anything. <small>(will discuss in the future work)</small>
 
 	</ul>
 

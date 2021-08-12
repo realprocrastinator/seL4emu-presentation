@@ -7,10 +7,10 @@ function getKey(keyStroke) {
 	isNetscape = (navigator.appName.indexOf('Netscape') == 0)
 	eventChooser = (isNetscape) ? keyStroke.which : event.keyCode;
 	which = String.fromCharCode(eventChooser);
-	if (which == ' ') window.location = "slide027.html";
-	if (which == 'n') window.location = "slide027.html";
+	if (which == ' ') window.location = "slide024.html";
+	if (which == 'n') window.location = "slide024.html";
 	if (which == 'h') window.location = "slide000.html";
-	if (which == 'b') window.location = "slide025.html";
+	if (which == 'b') window.location = "slide022.html";
 }
 document.onkeypress = getKey;
 // -->
@@ -24,17 +24,15 @@ document.onkeypress = getKey;
 
 <div align='center'><table height='95%' width='92%'><tr><td valign='top'>
 
-	<center><h3>Future Work <span class="cont">(cont)</span>
-	</h3></center>
-	
-	<h4>Definitely future works</h4>
-	<ul>
-	<li> modify the simple operating system and compile it using x86_64 version and test it with the emulation framework.
+<center><h3>Future Work <span class="cont">(cont)</span>
+</h3></center>
 
-	<li> extend the minimusllibc as well as the IPC emulation library <small>(emulated register set, calling conventions)</small> to support more architecture, so make the framework architecture-independent.
-	
-	<li> achieve binary compatibility vis <code>ptrace</code> or <b>Linux User Syscall Dispatch feature</b>. <small>(currently only supported on x86 and kernel version &ge; 5.11)</small> </li>
-	</ul>
+<h4>Non-started work</h4>
+<ul>
+<li> extend emulation framework to be architecture-independent.
+
+<li> achieve binary compatibility vis <code>ptrace</code> or <b>Linux User Syscall Dispatch feature</b>. <small>(currently only supported on x86 and kernel version &ge; 5.11)</small> </li>
+</ul>
 
 </td></tr></table></div>
 </body>

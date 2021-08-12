@@ -22,37 +22,31 @@ document.onkeypress = getKey;
 <a href="slide001.html"><span style="font-size:14pt;">6</span></a>
 <a href="slide007.html"><img border=0 alt="[next]" src="icon/next.gif"></a>
 
-<div align='center'><table height='95%' width='92%'><tr><td valign='top'>
-<div align='center'><h3>Minimusllibc Implementation</h3></div>
+<div align='center'><table border=0 height='95%' width='92%'><tr><td valign='top' colspan="2">
+<div align='center'><h3>Implementation Overview at Client Side </h3></div></td></tr>
 
-<p>Minimusllibc is a C library <b>only</b> used by the emulation library.</p>
+<tr><td valign='top'>
+<center><h4>Steps to develop client side emulation library</h4></center>
+<p><ul>
+<li> <font color='#009900'>Build system</font> <br>
+	&nbsp; <small>Reuse the powerful seL4 build system.</small>
+<li> <font color='#009900'>Linux syscall wrapper library</font> <br>
+	&nbsp; <small>Develop a library that <b>connects</b> emulation framework and Linux host.</small>
+<li> <font color='#009900'>Client runtime library</font> <br>
+	&nbsp; <small>Modify the current sel4runtime to <b>initialize</b> the emulation library.</small>
+<li> <font color='#009900'>Emulation IPC library</font> <br>
+	&nbsp; <small>Develop a library that <b>connects</b> seL4 threads and kernel emulator.</small>
+</ul></p>
+</td>
 
-<h4>Implementation challenges</h4>
-<ul>
-	<li> can't directly link the glibc on the host due to symbol name confliction. <span style="color: red; font-size: xx-large;">&#x2717;</span></li> 
-	<li> can't load the library at runtime as dynamic loading library depends on glibc. <span style="color: red; font-size: xx-large;">&#x2717;</span></li> 
-	
-</ul>
-</p>
+<td valign='top'>
+<center><h4>Emulation Framework Architecture</h4></center>
+<p style="margin-top: 10%;">
+<center>
+	<img alt="[Diagram:pics/arch.svg]" src="pics/arch.svg">
+</center></p>
+</td></tr>
 
-
-<h4>Current solution, simple but works :)</h4>
-<p>
-<ul>
-<li> port musllibc <samll>(glibc is too complex, porting it is overkill)</samll> and change symbol names. <small>(named <strong>minimusllibc</strong>)</small> <span style="color: green; font-size: xx-large;">&#10003;</span>
-</ul>
-</p>
-
-<h4>The current minimusllibc provides</h4>
-<ul>
-<li> socket related APIs such as <code>mini_socket, mini_accept, etc.</code>.
-<li> I/O APIs such as <code>mini_write, mini_read</code>, etc.
-<li> memory mapping APIs such as <code>mini_mmap</code>, etc.
-<li> signal APIs such as <code>mini_sigaction, mini_sigstack</code>, etc.
-</ul>
-<small>The minimusllibc is <strong>not thread safe</strong> for the simplicity.</small>
-</p>
-
-</td></tr></table></div>
+</table></div>
 </body>
 </html>

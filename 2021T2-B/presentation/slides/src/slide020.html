@@ -7,8 +7,8 @@ function getKey(keyStroke) {
 	isNetscape = (navigator.appName.indexOf('Netscape') == 0)
 	eventChooser = (isNetscape) ? keyStroke.which : event.keyCode;
 	which = String.fromCharCode(eventChooser);
-	if (which == ' ') window.location = "slide024.html";
-	if (which == 'n') window.location = "slide024.html";
+	if (which == ' ') window.location = "slide021.html";
+	if (which == 'n') window.location = "slide021.html";
 	if (which == 'h') window.location = "slide000.html";
 	if (which == 'b') window.location = "slide022.html";
 }
@@ -22,21 +22,25 @@ document.onkeypress = getKey;
 <a href="slide001.html"><span style="font-size:14pt;">20</span></a>
 <a href="slide021.html"><img border=0 alt="[next]" src="icon/next.gif"></a>
 
-<div align='center'><table height='95%' width='92%'><tr><td valign='top'>
+<div align='center'><h3>Physical Memory Emulation Example </h3></div></td></tr>
 
-	<center><h3>Physical Memory Emulation Implementation
-	</h3></center>
-	
-	<p>To implement this we are going to use the <code>shm_open</code> to create a shared memory and use this as our <b>emulated physical memory</b> as well as the <b>1:1 physical mapping area in the kernel window</b></p>
-
-	<p>Therefore, we also solved the challenge of passing bootinfo to the roottask as well as accessing IPC buffer.</p>
-
-	<ul>
-	<li> to pass the bootinfo, we first locate the bootinfo frame by calculating the offset.  
-	<li> pass the offset using emulation internal IPC to the seL4 application.
-	<li> seL4 application maps a page for the part of the file based on the offset.
-	<li> the same method makes mapping IPC buffer work as well. 
+<tr><td style="padding-left: 25%;" valign='middle'>
+	<p>
+		Stages of seL4 runtime setup using emulated physical memory:
+		<ul>
+		<li> Pass the bootinfo via physical offset and the internal IPC message.  
+		<li> A roottask maps a page for the part of the file based on the offset.
+		<li> The same method to map the IPC buffer.
+		</ul> 
 	</p>
+</td></tr>
+
+<tr><td>
+<p><center>
+	<img width="60%" alt="[Diagram:pics/pmem_emu.svg]" src="pics/pmem_emu.svg"></img>
+</center></p>
+</td>
+</tr>
 
 </td></tr></table></div>
 </body>

@@ -23,22 +23,31 @@ document.onkeypress = getKey;
 <a href="slide006.html"><img border=0 alt="[next]" src="icon/next.gif"></a>
 
 <div align='center'><table height='95%' width='92%'><tr><td valign='top'>
-<div align='center'><h3>Implementation Overview at Client Side </h3></div> 
-
-<h4>Steps to develop client side emulation library</strong>
-</h4>
-
-<p><ul>
-<li> <font color='#009900'>Build system</font> <br>
-	&nbsp; <small>Reuse the powerful seL4 build system to integrate our emulation library and generate headers based on the user configurations.</small>
-<li> <font color='#009900'>Another C library</font> <br>
-	&nbsp; <small>Develop a library that will be used by the emulation library and provide minimal Linux syscall wrapper functions and other utility functions.</small>
-<li> <font color='#009900'>Client runtime library</font> <br>
-	&nbsp; <small>Modify the current sel4runtime to do the initial setup for the emulation library.</small>
-<li> <font color='#009900'>Emulation IPC library</font> <br>
-	&nbsp; <small>Use UNIX domain socket to passing the seL4 syscall parameters, such as syscall number, message registers, etc.</small>
+<div align='center'><h3>Analysing "Hello World" Roottask <span class="cont">(cont)</span></h3></div>
+<p><strong>How many seL4 syscalls does the "Hello world" roottask invoke?</strong>
+<ul>
+<li> <code>seL4_SetTLSBase</code> &nbsp;<small>(set up the TLS region)</small>
+<li> <code>seL4_DebugNameThread</code>  &nbsp;<small>(needed if built with debug configuration)</small>
+<li> <code>seL4_DebugPutChar</code>
 </ul></p>
 
+<h4>How to redirect those syscalls?</h4>
+
+<p>Modify the libseL4 to integrate our emulation library.</p>
+
+<h4>At which level?</h4>
+
+<p>Modify the raw syscall ASM wrappers <small>(<code>syscall_syscalls.h</code>)</small> to achieve <strong>minimal</strong> modification in the original code. Take x86_64 as an example:</p>
+
+<p><center><table border='0' cellpadding='12'>
+	<tr valign=top><td><nobr><code>x64_sys_send</code></td><td>invokes</td><td><code>seL4emu_sys_send</code></td></tr>
+	<tr valign=top><td><nobr><code>x64_sys_reply</code></td><td>invokes</td><td><code>seL4emu_sys_reply</code></td></tr>
+	<tr valign=top><td><nobr><code>x64_sys_send_null</code></td><td>invokes</td><td><code>seL4emu_sys_send_null</code></td></tr>
+	<tr valign=top><td><nobr><code>x64_sys_recv</code></td><td>invokes</td><td><code>seL4emu_sys_recv</code></td></tr>
+	<tr valign=top><td><nobr><code>x64_sys_send_recv</code></td><td>invokes</td><td><code>seL4emu_sys_send_recv</code></td></tr>
+	<tr valign=top><td><nobr><code>x64_sys_nbsend_recv</code></td><td>invokes</td><td><code>seL4emu_sys_nbsend_recv</code></td></tr>
+	<tr valign=top><td><nobr><code>x64_sys_null</code></td><td>invokes</td><td><code>seL4emu_sys_null</code></td></tr>
+	</table></center><p>
 </td></tr></table></div>
 </body>
 </html>

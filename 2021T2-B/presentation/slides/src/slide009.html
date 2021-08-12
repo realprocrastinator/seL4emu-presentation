@@ -23,12 +23,18 @@ document.onkeypress = getKey;
 <a href="slide010.html"><img border=0 alt="[next]" src="icon/next.gif"></a>
 
 <div align='center'><table height='95%' width='92%'><tr><td valign='top'>
-<div align='center'><h3>seL4 IPC System Call Flow</h3></div>
+	<div align='center'><h3>Emulation Runtime Library Implementation <span class="cont">(cont)</span></h3></div>
+	
+	<p>The initialization of the emulation library will be done <b>before</b> the <code>main</code> function starts. 
+		<ul>
+		<li> Handshaking between the kernel emulator and the rootask.
+		<li> Initial setup for the roottask. <small>(map IPC buffer, bootinfo, set up signal handler)</small>	
+		<li> Report about the initialization status.
+		</ul>
+	</p>
+	<p><center><img width="50%" src="pics/sel4emu_initsetup.svg"></img></center></p>
+	</td></tr>	
+</table></div>
 
-<p>To emulate the seL4 IPC invocation, we use <font color='#0000BB'>UNIX Domain Sockets</font>. So <code>send</code> and <code>receive</code> emulates context switching between the seL4 kernel and the userland.</p>
-
-<p><center><img  width='600vw' alt="[Diagram:pics/sel4_syscall_flow.svg]" src="pics/sel4_syscall_flow.svg"></img></center></p>
-
-</td></tr></table></div>
 </body>
 </html>

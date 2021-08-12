@@ -23,16 +23,30 @@ document.onkeypress = getKey;
 <a href="slide009.html"><img border=0 alt="[next]" src="icon/next.gif"></a>
 
 <div align='center'><table height='95%' width='92%'><tr><td valign='top'>
-<div align='center'><h3>Emulation Runtime Library Implementation <span class="cont">(cont)</span></h3></div>
+<center><h3>seL4 Emulation Runtime Library Implementation</h3></center>
 
-<p>The initialization of the emulation library will be done before the <code>main</code> function starts. 
+<h4>Modification on seL4runtime</h4>
+
+<p>
+	Emulation library <b>environment setup</b> before entering the <code>main</code> function.
+<ul>
+<li> <b>Obtain the bootinfo</b>
 	<ul>
-	<li> the kernel emulator and the rootask will do handshaking.
-	<li> the roottask will do an initial setup. <small>(map IPC buffer, bootinfo, set up signal handler)</small>	
-	<li> roottask will inform the kernel emulator about the initialization status.
-	</ul>
+		<li><font color='green'>Before kernel passes bootinfo as function arguments.</font></li>
+		<li><font color='red'>Now map bootinfo frame as shared memory to access.</font></li>
+	</li></ul>
+<li> <b>Setup TLS</b>
+	<ul>
+		<li><font color='green'>Before kernel sets up the TLS region.</font></li>
+		<li><font color='red'>Now we set up by ourselves implicitly.</font> <small>(e.g. using <code>FSGSBASE</code> instruction family on x86 if available, otherwise use Linux process control syscalls)</small></li>
+	</li></ul> 
+<li> <b>Emulation library internal setup</b>
+	<ul>
+		<li><font color='green'>Before no such routine.</font></li>
+		<li><font color='red'>Now we initialize the emulation library.</font> <small>(Explain in the next slide)</small>
+	</li></ul> 
+</ul>
 </p>
-<p><center><img src="pics/sel4emu_initsetup.svg"></img></center></p>
 
 </td></tr></table></div>
 </body>

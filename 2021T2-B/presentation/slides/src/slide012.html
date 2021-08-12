@@ -38,15 +38,21 @@ document.onkeypress = getKey;
 <p>
 	The UNIX Domain Sockets message passing has two protocols:
 	<ul>
-		<li> seL4 IPC emulation.
-		<li> emulation library internal usage.
-		<li> use <code>Tag</code> to distinguish them.
-		<li> the kernel emulator uses <code>ID</code> in the internal IPC message to distinguish the calling seL4 thread.
-		<li> the body section either contains the user context register set or the internal IPC message content. <small>(<code>n_contextRegisters</code> is defined in the arch dependent <code>registerset.h</code>, on x86_64 it is <b>24</b>)</small> 
+		<li> Use <code>Tag</code> to distinguish:
+			<ul>
+				<li> seL4 IPC emulation message.
+				<li> Emulation library internal message.
+			</ul>		
+		<li> The kernel emulator uses <code>ID</code> to distinguish the calling seL4 thread.
+		<li> The body section can be either: 
+			<ul>
+				<li> The user context register set
+				<li> The internal IPC message content. <small>(<code>n_contextRegisters</code> is defined in the arch dependent <code>registerset.h</code>, on x86_64 it is <b>24</b>)</small>
+			</ul> 
 	</ul>
 </p>
 
-<p><strong>But how to pass our IPC Buffer?</strong><br>
+<!-- <p><strong>But how to pass our IPC Buffer?</strong><br>
 	<ul>
 		<li> seL4 thread and the kernel emulator are <b>different Linux processes</b> <small>(explain in later slides)</small>, so they have different address spaces.
 		<li> writing to the IPC buffer should <b>immediately</b> appear on the kernel emulator's view.
@@ -62,7 +68,7 @@ document.onkeypress = getKey;
 	<li> <code>write</code> and <code>read</code> won't have any concurrency issues. <span style="color: green; font-size: xx-large;">&#10003;</span> </li>
 	<li> kernel emulator can access the seL4 thread's IPC buffer directly even they are different processes. <span style="color: green; font-size: xx-large;">&#10003;</span>
 	</ul>
-</p>
+</p> -->
 
 </td></tr></table></div>
 </body>
