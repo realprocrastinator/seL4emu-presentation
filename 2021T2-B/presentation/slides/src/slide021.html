@@ -1,5 +1,5 @@
 <html>
-<head><title>2021 Thesis B Presentation (21)</title>
+<head><title>2021 Thesis B Presentation (24)</title>
 <link href='slides.css' rel='stylesheet' type='text/css'>
 <script language="JavaScript">
 // <!--
@@ -7,10 +7,10 @@ function getKey(keyStroke) {
 	isNetscape = (navigator.appName.indexOf('Netscape') == 0)
 	eventChooser = (isNetscape) ? keyStroke.which : event.keyCode;
 	which = String.fromCharCode(eventChooser);
-	if (which == ' ') window.location = "slide022.html";
-	if (which == 'n') window.location = "slide022.html";
+	if (which == ' ') window.location = "slide025.html";
+	if (which == 'n') window.location = "slide025.html";
 	if (which == 'h') window.location = "slide000.html";
-	if (which == 'b') window.location = "slide020.html";
+	if (which == 'b') window.location = "slide023.html";
 }
 document.onkeypress = getKey;
 // -->
@@ -24,23 +24,12 @@ document.onkeypress = getKey;
 
 <div align='center'><table height='95%' width='92%'><tr><td valign='top'>
 
-<div align='center'><h3>seL4 Kernel Recap</h3></div>
+	<div align='center'><h3>Physical Memory Emulation Diagram </h3></div>
 
-<h4>Recap on seL4 kernel functionalities</h4>
+	<p><center>
+		<img width="50%" alt="[Diagram:pics/pmem_emu.svg]" src="pics/pmem_emu.svg"></img>
+	</center></p>
 
-<p>For emulating a simple hello world roottask, the minimal requirements of the kernel objects are <b>cnode</b>, <b>vspace</b>, <b>endpoints</b>, and <b>tcb</b>.  
-<ul>
-<li> the <b>capability</b> is the most critical part of the seL4 system. As far as I understand it's <code>access rights + reference</code>. With the capability, we can retrieve the virtual address of this kernel object then access the object. 
-
-<li> the <b>vspace</b> implements the architecture dependent paging structures so that we can map virtual addresses to the physical addresses. 
-
-<li> the <b>endpoint</b> facilitates the message-passing communication between threads and implements the rendezvous IPC model. The endpoint structure internally is implemented as a queue which only has a head and a tail. They both point to a <b>tcb</b> structure. 
-
-<li> the <b>tcb</b> represents the seL4 thread. It contains all information about the seL4 thread, such as the thread state, capability pointer to the IPB buffer, fault, scheduling priority, etc. 
-
-<p>However, we can see the most important part is how to resolve the pointer referencing so that the kernel emulator can access any seL4 thread's kernel objects. We explore how the original kernel does that. <font color='#0000BB'>The answer is the seL4 kernel map the entire physical memory into the kernel window.</font><small>(discuss in next slide)</small></p> 
-</p>
 </td></tr></table></div>
-
 </body>
 </html>

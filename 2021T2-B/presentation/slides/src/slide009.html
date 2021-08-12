@@ -25,7 +25,7 @@ document.onkeypress = getKey;
 <div align='center'><table height='95%' width='92%'><tr><td valign='top'>
 <div align='center'><h3>seL4 IPC System Call Flow</h3></div>
 
-<p>The following diagram shows the execution flow when the seL4 IPC happens. The seL4 thread invokes the syscall instruction and traps into the kernel, and the kernel will store the user context and invokes the syscall handlers. After the handler finishes, the kernel will load the user context and return control back to the userland.</p>
+<p>To emulate the seL4 IPC invocation, we use <font color='#0000BB'>UNIX Domain Sockets</font>. So <code>send</code> and <code>receive</code> emulates context switching between the seL4 kernel and the userland.</p>
 
 <p><center><img  width='600vw' alt="[Diagram:pics/sel4_syscall_flow.svg]" src="pics/sel4_syscall_flow.svg"></img></center></p>
 

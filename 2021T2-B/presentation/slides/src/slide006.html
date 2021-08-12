@@ -24,28 +24,33 @@ document.onkeypress = getKey;
 
 <div align='center'><table height='95%' width='92%'><tr><td valign='top'>
 <div align='center'><h3>Minimusllibc Implementation</h3></div>
-<strong>A C library used by the emulation library</strong>
 
-<p>The emulation library requires using Linux system call wrappers as well as other functionalities to make developing easier. However, the current musllibc is modified and  used by seL4 system, so we can't use those APIs provided by musllibc. To do that I tried:</p>
+<p>Minimusllibc is a C library <b>only</b> used by the emulation library.</p>
+
+<h4>Implementation challenges</h4>
 <ul>
-
-<li> Link glibc on the host: can't link glibc on the host as the seL4 application are statically compiled and linked. <span style="color: red; font-size: xx-large;">&#x2717;</span>
-
-<li> Load glibc at runtime: the dynamic library provides <code>dlopen</code>, <code>dlsym</code> and so on depends on glibc itself. And porting those functions are complicated. <span style="color: red; font-size: xx-large;">&#x2717;</span>
-
-<li> Change symbol names: the current working approach is quite simple. We ported a part of the musllibc code with symbol names changed and linked with the emulation library. <small>(named <strong>minimusllibc</strong> :-))</small> <span style="color: green; font-size: xx-large;">&#10003;</span>
-
+	<li> can't directly link the glibc on the host due to symbol name confliction. <span style="color: red; font-size: xx-large;">&#x2717;</span></li> 
+	<li> can't load the library at runtime as dynamic loading library depends on glibc. <span style="color: red; font-size: xx-large;">&#x2717;</span></li> 
+	
 </ul>
+</p>
 
-<p> 
-The current minimusllibc provides:
+
+<h4>Current solution, simple but works :)</h4>
+<p>
+<ul>
+<li> port musllibc <samll>(glibc is too complex, porting it is overkill)</samll> and change symbol names. <small>(named <strong>minimusllibc</strong>)</small> <span style="color: green; font-size: xx-large;">&#10003;</span>
+</ul>
+</p>
+
+<h4>The current minimusllibc provides</h4>
 <ul>
 <li> socket related APIs such as <code>mini_socket, mini_accept, etc.</code>.
 <li> I/O APIs such as <code>mini_write, mini_read</code>, etc.
 <li> memory mapping APIs such as <code>mini_mmap</code>, etc.
 <li> signal APIs such as <code>mini_sigaction, mini_sigstack</code>, etc.
 </ul>
-<small>The minimusllibc is <strong>not thread safe</strong> for the simplicity will explain in later sides.</small>
+<small>The minimusllibc is <strong>not thread safe</strong> for the simplicity.</small>
 </p>
 
 </td></tr></table></div>

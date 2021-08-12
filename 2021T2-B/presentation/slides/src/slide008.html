@@ -24,12 +24,13 @@ document.onkeypress = getKey;
 
 <div align='center'><table height='95%' width='92%'><tr><td valign='top'>
 <div align='center'><h3>Emulation Runtime Library Implementation <span class="cont">(cont)</span></h3></div>
-<p>Since the emulation framework needs to do some intial setup before entring the main funtion, hence, most of the
-	work will be done in the runtime library. 
+
+<p>The initialization of the emulation library will be done before the <code>main</code> function starts. 
 	<ul>
-	<li> the kernel emulator and the rootask will do a handshaking.
-	<li> the roottask will do an intial set up. <small>(map IPC buffer, boot info, set up signal handler)</small>	
+	<li> the kernel emulator and the rootask will do handshaking.
+	<li> the roottask will do an initial setup. <small>(map IPC buffer, bootinfo, set up signal handler)</small>	
 	<li> roottask will inform the kernel emulator about the initialization status.
+	</ul>
 </p>
 <p><center><img src="pics/sel4emu_initsetup.svg"></img></center></p>
 

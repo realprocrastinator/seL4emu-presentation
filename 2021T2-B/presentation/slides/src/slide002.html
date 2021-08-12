@@ -27,26 +27,34 @@ document.onkeypress = getKey;
 
 <h4>What is the project about?</h4>
 
-<p>Implement a <strong>compatibility layer</strong> so that we can directly run seL4 applications on Linux without machine emulation or virtualization. (Here we define seL4 applications are applications that are linked to seL4 libraries and use seL4 functionalities. In the seL4 world, they are called seL4 threads) In the rest of the slides, term clients refer to seL4 applications aka seL4 threads. Server refers to the kernel emulator. 
+<p>
+	<ul>
+	<li>a <strong>compatibility layer</strong> for the seL4 system (seL4 threads + seL4 kernel) to run on Linux. <small>(In the rest of the slides, term clients refer to seL4 applications aka seL4 threads. Server refers to the kernel emulator)</small>
+	<li>no machine emulation <small>(e.g. Qemu, etc.)</small> or virtualization. <small>(e.g. KVM, etc.)</small>
+	</ul>
 </p>
 
 <h4>What are the benefits?</h4>
 
 Developing:
 <ul>
-<li> an easy way for rapid prototyping an application in Linux environment.
+<li> an easy way for rapid prototyping an application for seL4 system in Linux environment.
 <li> use Linux tools directly. <small>(e.g. GDB, valgrind, strace, etc.)</small></li>
-<li> Access to Linux system’s rich input and output <small>(e.g. Files, Networking etc.)</small>. Instead of developing a device-specific driver, we can implement a special seL4 sever application that has direct access to Linux I/O.
+<li> access to Linux system’s rich input and output <small>(e.g. Files, Networking ,etc.)</small>. Instead of developing a device-specific driver, we can develop a special seL4 server application that has direct access to Linux I/O.
 </ul>
 
 Self-learning:
 <ul>
-<li> Learning a lot of things during the project
+<li> Learning a lot of things during the project.
 </ul>
 
 
-<h4>The expected outcome</h4>
-With the emulation framework, we should achieve at least <strong>source compatibility</strong>, meaning that after recompiling the seL4 application source code. We can run the application successfully. Moreover, we can also achieve binary compatibility. However, this is not implemented at the moment and will be discussed in the later slides.
+<h4>Current outcome</h4>
+<ul>
+	<li> source code compatibility.
+	<li> a fundamental emulation framework to run some simple seL4 roottasks.
+	<li> able to invoke most seL4 kernel functionalities. <small>(cnode, vspace, tcb, etc.)</small>
+<ul>
 
 </td></tr></table></div>
 </body>

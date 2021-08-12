@@ -24,13 +24,26 @@ document.onkeypress = getKey;
 
 <div align='center'><table height='95%' width='92%'><tr><td valign='top'>
 
-<div align='center'><h3>Memory Mapping Emulation Implementation <span class="cont">(cont)</span></h3></div>
+	<div align='center'><h3>Kernel Emulator Implementation</h3></div>
+	
+	<p>To implement the kernel emulator, we want to <strong>reuse the kernel code as much as possible</strong> and modify the kernel code as less as possible.</p>
+	
+	<p>The current implementation has the following modifications:</p> 
+	<ul>
 
-<p>The following diagram illustrates the program flow of the memory mapping emulation. Here we assume <i>0x80000</i> is already mapped by the virtual memory management server. And the paging structure is updated already.</p>
+	<li> Provide a new kernel entry point
+		
+	<li> Reuse the boot code to do the initialization work. <small></small>(Collect the bootinfo and set up the kernel objects for the roottask, etc.)</small>
 
-<p><center>
-<img alt="[Diagram:pics/sel4_mem_emu.svg]" src="pics/sel4_mem_emu.svg"></img>
-</center></p>
+	<li> Dispatch the seL4 IPC message into the <strong>kernel interrupts or syscalls handling routines</strong>. <small>(In seL4, interrupts and exceptions are all handled in one routine and system calls which are entered using syscall instructions will enter a fast syscall routine)</small> 
+
+	<li> Emulate privilege instructions or bypass them.
+
+	<li> Emulate the <strong>kernel window mapping</strong>.
+		
+	<li> Currently, the scheduling part in the kernel emulator doesn't do anything. <small>(will discuss in the future work)</small>
+
+	</ul>
 
 </td></tr></table></div>
 </body>

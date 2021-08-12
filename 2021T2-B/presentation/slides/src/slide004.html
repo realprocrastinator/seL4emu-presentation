@@ -24,16 +24,21 @@ document.onkeypress = getKey;
 
 <div align='center'><table height='95%' width='92%'><tr><td valign='top'>
 <div align='center'><h3>Analysing "Hello World" Roottask <span class="cont">(cont)</span></h3></div>
-<strong>How many seL4 syscalls needed by the helloworld roottask?</strong>
+<p><strong>How many seL4 syscalls does the "Hello world" roottask invoke?</strong>
 <ul>
 <li> <code>seL4_SetTLSBase</code> &nbsp;<small>(set up the TLS region)</small>
 <li> <code>seL4_DebugNameThread</code>  &nbsp;<small>(needed if built with debug configuration)</small>
 <li> <code>seL4_DebugPutChar</code>
-</ul> 
-<strong>How to redirect those syscalls?</strong><br>
+</ul></p>
 
-<p>Dive deeper into how the above APIs are implemented. We can find they are actually wrappers around the raw seL4 syscalls. <small>(e.g. x64_sys_send_recv() in syscall_syscalls.h) Those raw seL4 syscalls are wrapper around the ASM syscall instructions and they are <strong>architecture dependent</strong>.</small>Other high level APIs provided by libseL4 eventually go here.
-<p>Hence we can redirect the system calls with the <strong>minimal</strong> modification in the original code by modifying the following raw syscall wrappers <small>(Take x86_64 as an example)</small>.</p>
+<h4>How to redirect those syscalls?</h4>
+
+<p>Modify the libsel4 to integrate our emulation library.</p>
+
+<h4>At which level?</h4>
+
+<p>Modify the raw syscall ASM wrappers <small>(syscall_syscalls.h)</small> to achieve <strong>minimal</strong> modification in the original code. Take x86_64 as an example:</p>
+
 <p><center><table border='0' cellpadding='12'>
 	<tr valign=top><td><nobr><code>x64_sys_send</code></td><td>invokes</td><td><code>seL4emu_sys_send</code></td></tr>
 	<tr valign=top><td><nobr><code>x64_sys_reply</code></td><td>invokes</td><td><code>seL4emu_sys_reply</code></td></tr>

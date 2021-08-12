@@ -25,7 +25,7 @@ document.onkeypress = getKey;
 <div align='center'><table height='95%' width='92%'><tr><td valign='top'>
 <div align='center'><h3>seL4 IPC Internals <span class="cont">(cont)</span></h3></div>
 
-<p>According to the x86 calling conventions and the seL4 semantics</p>
+<p>According to the x86 calling conventions and the seL4 semantics.</p>
 <p><center><table border='0' cellpadding='12'>
 <tr valign=top><td><nobr><code>RDI</code></td><td>stores</td><td><code>syscall number</code></td></tr>
 <tr valign=top><td><nobr><code>RSI</code></td><td>stores</td><td><code>message info</code></td></tr>
@@ -38,8 +38,8 @@ document.onkeypress = getKey;
 <tr valign=top><td><nobr><code>IPC Buffer</code></td><td>stores</td><td><code>Other message registers</td>
 <tr></table></center><p>
 
-<p>According to seL4's design, the only <b>first four</b> message registers will be passed using <b>physical registers</b> and the rest will be placed in the IPC Buffer. We will strictly follow this semantic so we need to design the IPC emulation protocal. <small>(next slide)</small></p>
-
+<p>We need to pass the <strong>emulated register set values</strong> needed by the seL4 kernel besides the message registers.
+	
 </td></tr></table></div>
 </body>
 </html>

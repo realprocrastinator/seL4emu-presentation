@@ -7,10 +7,10 @@ function getKey(keyStroke) {
 	isNetscape = (navigator.appName.indexOf('Netscape') == 0)
 	eventChooser = (isNetscape) ? keyStroke.which : event.keyCode;
 	which = String.fromCharCode(eventChooser);
-	if (which == ' ') window.location = "slide016.html";
-	if (which == 'n') window.location = "slide016.html";
+	if (which == ' ') window.location = "slide018.html";
+	if (which == 'n') window.location = "slide018.html";
 	if (which == 'h') window.location = "slide000.html";
-	if (which == 'b') window.location = "slide014.html";
+	if (which == 'b') window.location = "slide016.html";
 }
 document.onkeypress = getKey;
 // -->
@@ -23,17 +23,14 @@ document.onkeypress = getKey;
 <a href="slide016.html"><img border=0 alt="[next]" src="icon/next.gif"></a>
 
 <div align='center'><table height='95%' width='92%'><tr><td valign='top'>
-<div align='center'><h3>Linux Signal Handler Recap </h3></div>
 
-<ul>
-	<li>When the signal is delivered to the current process, Linux already set up a signal stack for us. The default stack is placed below the current stack pointer's location.
-	<li>Linux kernel has assumptions about the layout of the signal handler frame. The lowest 8 byte points to the user signal restorer stub.
-	<li>Below the stack frame is the signal handler. Hence when the signal handler returns, it will automatically invoke the user signal restore stub and trap it back to the kernel again to ask the kernel to clean up and restore the original context when the signal happened.	
-<ul>
-	
+<div align='center'><h3>Memory Mapping Emulation Implementation <span class="cont">(cont)</span></h3></div>
+
+<p>The following diagram illustrates the program flow of the memory mapping emulation. Here we assume <i>0x80000</i> is already mapped by the virtual memory management server. And the paging structure is updated already.</p>
+
 <p><center>
-<img height="500px" alt="[Diagram:pics/signal stack.svg]" src="pics/signal stack.svg">
-</center><p>
+<img alt="[Diagram:pics/sel4_mem_emu.svg]" src="pics/sel4_mem_emu.svg"></img>
+</center></p>
 
 </td></tr></table></div>
 </body>

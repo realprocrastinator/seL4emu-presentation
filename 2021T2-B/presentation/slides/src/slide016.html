@@ -23,27 +23,29 @@ document.onkeypress = getKey;
 <a href="slide017.html"><img border=0 alt="[next]" src="icon/next.gif"></a>
 
 <div align='center'><table height='95%' width='92%'><tr><td valign='top'>
-<div align='center'><h3>Memory Mapping Emulation Implementation </h3></div>
-
-<h4>What do we want to achieve</h4>
-
-<p> 
-<ul>
-<li> The program execution will stop if the memory access is invalid and without any mapping.
-<li> The program will continue execution after an explicit seL4 mapping invocation.
-<li> Assume we implement a lazy mapping mechanism. The program will stop upon accessing the memory address and the vm fault handler will update the paging structure. Eventually, the faulting program restarts at the faulting instruction and continues.
-</ul>
-
-<h4>How to implement?</h4> 
-
-<ul>
-<li> set up a signal handler during the runtime initial stage.
-<li> the seL4 application tries to access an unmapped memory address. 
-<li> <code>SIGSEGV</code> triggered and invokes the siganl handler routine. 
-<li> the signal handler sends an IPC to the kernel emulator.
-<li> the kernel emulator will verify the mapping and reply.
-<li> the signal handler will check the reply. It will either map the faulting address by using <code>MAP_FIXED</code> then return back to the previous context or halt the program execution.
-</ul>
+	<div align='center'><h3>Client Side Emulation Library Summary</h3></div>
+	<p>At this stage, we have solved most of the problems regarding the client side emulation library.</p>
+	
+	<ul>
+	<li> emulation runtime library sets up the TLS, IPC Buffer.
+	<li> seL4 IPC emulation implementation using UNIX Domain Sockets to pass the message registers as well as the emulated register set.
+	<li> the IPC emulation library distinguishes the seL4 IPCs and the emulation internal IPCs using two different protocols.
+	<li> memory mapping emulation implementation uses signal handlers to capture the VM fault and might do lazy mapping on-demand or halt the execution.
+	<li> one seL4 thread is mapped to one Linux process.
+	</ul>	
+	
+	<p>However, we haven't discussed the rest of the problems in detail.</p>
+	
+	<ul>
+	<li> How does the kernel emulator run?
+	<li> How does the kernel emulator start the roottask?
+	<li> How do we emulate physical memory?
+	<li> How does the kernel emulator start the roottask?
+	<li> How can kernel distinguish different seL4 applications?
+	<li> How to emulate the scheduling?
+	</ul>
+	<p>
+	The following slides will focus on discussing those questions.
 
 </td></tr></table></div>
 </body>

@@ -1,5 +1,5 @@
 <html>
-<head><title>2021 Thesis B Presentation (18)</title>
+<head><title>2021 Thesis B Presentation (21)</title>
 <link href='slides.css' rel='stylesheet' type='text/css'>
 <script language="JavaScript">
 // <!--
@@ -7,10 +7,10 @@ function getKey(keyStroke) {
 	isNetscape = (navigator.appName.indexOf('Netscape') == 0)
 	eventChooser = (isNetscape) ? keyStroke.which : event.keyCode;
 	which = String.fromCharCode(eventChooser);
-	if (which == ' ') window.location = "slide019.html";
-	if (which == 'n') window.location = "slide019.html";
+	if (which == ' ') window.location = "slide022.html";
+	if (which == 'n') window.location = "slide022.html";
 	if (which == 'h') window.location = "slide000.html";
-	if (which == 'b') window.location = "slide017.html";
+	if (which == 'b') window.location = "slide020.html";
 }
 document.onkeypress = getKey;
 // -->
@@ -23,29 +23,29 @@ document.onkeypress = getKey;
 <a href="slide019.html"><img border=0 alt="[next]" src="icon/next.gif"></a>
 
 <div align='center'><table height='95%' width='92%'><tr><td valign='top'>
-<div align='center'><h3>Client Side Emulation Library Summary</h3></div>
-<p>At this stage, we have solved most of the problems regarding the client side emulation library</p>
 
+<div align='center'><h3>seL4 Kernel Recap</h3></div>
+
+<h4>Recap on seL4 kernel functionalities</h4>
+
+<p>For emulating a simple hello world roottask, the minimal requirements of the kernel objects are <b>cnode</b>, <b>vspace</b>, <b>endpoints</b>, and <b>tcb</b>.  
 <ul>
-<li> emulation runtime library sets up the TLS, IPC Buffer.
-<li> seL4 IPC emulation implementation using UNIX Domain Sockets to pass the message registers as well as the emulated register set.
-<li> the IPC emulation library distinguishes the seL4 IPCs and the emulation internal IPCs using two different protocols.
-<li> memory mapping emulation implementation uses signal handlers to capture the vm fault and might do lazy mapping on-demand or halt the execution.
-<li> one seL4 thread is mapped to one Linux process
-</ul>	
+<li> <b>capability:</b> <code>access rights + reference</code>. With the capability, we can retrieve the <strong>virtual address</strong> of any kernel object and access the object. 
 
-<p>However, we haven't discussed the rest of the problems in detail.</p>
+<li> <b>vspace</b>: architecture-dependent paging structures. 
 
-<ul>
-<li> How does the kernel emulator run?
-<li> How does the kernel emulator start the roottask?
-<li> How do we emulate physical memory?
-<li> How does the kernel emulator start the roottask?
-<li> How can kernel distinguish different seL4 applications?
-<li> How to emulate the scheduling?
+<li> the <b>endpoint</b> facilitates the message-passing communication between threads. 
+
+<li> the <b>tcb</b> represents the seL4 thread structure. <small>(thread state, capability pointer to the IPB buffer, fault, scheduling priority, etc.)</small> 
 </ul>
-<p>
-The following slides will focus on discussing those questions.
+</p>
+
+<h4>Main takeaway:</h4>
+
+<p>Kernel accessing all the kernel objects using virtual addresses as a reference, so we need to emulate <strong>the physical memory mapping area in the kernel window.</strong></p> 
+</p>
+
 </td></tr></table></div>
+
 </body>
 </html>

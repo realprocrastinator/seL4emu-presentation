@@ -24,34 +24,30 @@ document.onkeypress = getKey;
 
 <div align='center'><table height='95%' width='92%'><tr><td valign='top'>
 <div align='center'><h3>Analysing "Hello World" Roottask</h3></div>
-<h4>Where to start with?</h4>
-<p>
-Let's start with inspecting a roottask printing "Hello World!". Notice that the following discussion will assume we use an x86_64 platform due to the current implementation. But we can extend the framework to be architecture independent without many changes. 
-</p>
 
-<h4>What does a helloworld roottask need?</h4>
+<h4>What does a "Hello World" roottask need?</h4>
 
-<p><strong>A runtime library</strong></p>
+<p><font color='#009900'>A runtime library</font></p>
 <p>Set up the environment for an seL4 thread. <small>(e.g. TLS region, POSIX syscall API redirection, IPC Buffer, etc.)</small>
 <ul><li>seL4runtime</li></ul>
 </p>
 
-<p><strong>C library</strong></p>
-<p>Provide POSIX programming interfaces for the developer. <small>(e.g. printf, open, read, etc.)</small> Also the modified musllibc will redirect the POSIX syscalls to the handlers provided by seL4muslsys.
+<p><font color='#009900'>C library</font></p>
+<p>Provide POSIX programming interfaces for the developer. <small>(e.g. <code>printf</code>, <code>open</code>, <code>read</code>, etc.)</small> Also, the modified musllibc will redirect the POSIX syscalls to the handlers provided by seL4muslsys.
 <ul>
 <li>musllibc</li>
 <li>seL4musllibcsys</li>
 </ul>
 </p> 
 
-<p><strong>seL4 system call library</strong></p>
+<p><font color='#009900'>seL4 system call library</font></p>
 <p>Provide seL4 system call APIs.
 <ul>
 <li>libseL4</li>
 </ul>
 </p>
 
-<p><strong>seL4 kernel</strong></p>
+<p><font color='#009900'>seL4 kernel</font></p>
 <p>Provide seL4 kernel functionalities and handle seL4 threads' requests.
 <ul>
 <li>seL4 kernel</li>
