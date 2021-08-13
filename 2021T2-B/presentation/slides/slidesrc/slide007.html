@@ -1,0 +1,58 @@
+<html>
+<head><title>2021 Thesis B Presentation (7)</title>
+<link href='slides.css' rel='stylesheet' type='text/css'>
+<script language="JavaScript">
+// <!--
+function getKey(keyStroke) {
+	isNetscape = (navigator.appName.indexOf('Netscape') == 0)
+	eventChooser = (isNetscape) ? keyStroke.which : event.keyCode;
+	which = String.fromCharCode(eventChooser);
+	if (which == ' ') window.location = "slide008.html";
+	if (which == 'n') window.location = "slide008.html";
+	if (which == 'h') window.location = "slide000.html";
+	if (which == 'b') window.location = "slide006.html";
+}
+document.onkeypress = getKey;
+// -->
+</script>
+
+</head>
+<body>
+<a href="slide006.html"><img border=0 alt="[prev]" src="icon/prev.gif"></a>
+<a href="slide001.html"><span style="font-size:14pt;">7</span></a>
+<a href="slide008.html"><img border=0 alt="[next]" src="icon/next.gif"></a>
+
+<div align='center'><table height='95%' width='92%'><tr><td valign='top'>
+<div align='center'><h3>Minimusllibc Implementation</h3></div>
+
+<p>Minimusllibc is a C library <b>only</b> used by the emulation library.</p>
+
+<h4>Current implementation, simple but works :)</h4>
+<p>
+<ul>
+<li> Port musllibc <samll>(glibc is too complex, porting it is overkill)</samll> and change symbol names. <small>(named <strong>minimusllibc</strong>)</small> <span style="color: green; font-size: xx-large;">&#10003;</span>
+</ul>
+</p>
+
+<h4>Why?</h4>
+<ul>
+	<li> Symbol name confliction with host glibc and seL4 musllibc. <span style="color: red; font-size: xx-large;">&#x2717;</span></li> 
+	<li> Static linking introduces limitations. <span style="color: red; font-size: xx-large;">&#x2717;</span></li>
+	<li> Dynamic loading library depends on glibc, porting one is quite overkill.<span style="color: red; font-size: xx-large;">&#x2717;</span></li> 
+</ul>
+</p>
+
+<h4>The current minimusllibc provides</h4>
+<ul>
+<li> Socket related APIs <small>(e.g. <code>mini_socket</code>, <code>mini_accept</code>, etc.)</small>
+<li> I/O APIs <small>(e.g. <code>mini_write</code>, <code>mini_read</code>, etc.)</small>
+<li> Memory mapping APIs <small>(e.g. <code>mini_mmap</code>, etc.)</small>
+<li> Signal APIs <small>(e.g. <code>mini_sigaction</code>, <code>mini_sigstack</code>, etc.)</small>
+<li> <strong>But not thread safe</strong> <small>(unnecessary at the moment)</small>.
+
+</ul>
+</p>
+
+</td></tr></table></div>
+</body>
+</html>

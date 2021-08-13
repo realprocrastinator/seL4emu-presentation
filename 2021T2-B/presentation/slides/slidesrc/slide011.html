@@ -1,0 +1,86 @@
+<html>
+<head><title>2021 Thesis B Presentation (11)</title>
+<link href='slides.css' rel='stylesheet' type='text/css'>
+<script language="JavaScript">
+// <!--
+function getKey(keyStroke) {
+	isNetscape = (navigator.appName.indexOf('Netscape') == 0)
+	eventChooser = (isNetscape) ? keyStroke.which : event.keyCode;
+	which = String.fromCharCode(eventChooser);
+	if (which == ' ') window.location = "slide012.html";
+	if (which == 'n') window.location = "slide012.html";
+	if (which == 'h') window.location = "slide000.html";
+	if (which == 'b') window.location = "slide010.html";
+}
+document.onkeypress = getKey;
+// -->
+</script>
+
+</head>
+<body>
+<a href="slide010.html"><img border=0 alt="[prev]" src="icon/prev.gif"></a>
+<a href="slide001.html"><span style="font-size:14pt;">11</span></a>
+<a href="slide012.html"><img border=0 alt="[next]" src="icon/next.gif"></a>
+
+<div align='center'><table border="0" height='95%' width='92%' ><tr><td valign='top' td colspan="2">
+<div align='center'><h3>seL4 IPC Emulation Internals </h3></div></td></tr>
+
+<tr><td td colspan="2">
+	<p>To implement the seL4 IPC emulation, we need to:
+		<ul>
+			<li> Pass the <strong>emulated register set values</strong> + the message registers.
+			<li> Follow the architecture specific calling conventions and the seL4 semantics.
+		</ul>
+		For example to emulate <code>x64_sys_send_recv</code>: on x86_64:
+	</p>
+</td></tr>
+
+<tr><td colspan="2"><br></td><tr>
+
+<tr>
+<td>
+	<p><table cellpadding='8'><tr><td valign='middle' bgcolor='#DDDDDD'><pre>
+x64_sys_recv(seL4_Word sys, seL4_Word src, seL4_Word *out_badge, 
+	seL4_Word *out_info, seL4_Word *out_mr0, seL4_Word *out_mr1, 
+	seL4_Word *out_mr2, seL4_Word *out_mr3, seL4_Word reply)
+{
+	register seL4_Word mr0 asm("r10");
+	register seL4_Word mr1 asm("r8");
+	register seL4_Word mr2 asm("r9");
+	register seL4_Word mr3 asm("r15");
+	MCS_REPLY_DECL;
+	asm volatile(
+		"movq   %%rsp, %%rbx    \n"
+		"syscall                \n"
+		"movq   %%rbx, %%rsp    \n"
+		: "=D"(*out_badge),
+		"=S"(*out_info),
+		"=r"(mr0),
+		"=r"(mr1),
+		"=r"(mr2),
+		"=r"(mr3)
+		: "d"(sys),
+		"D"(src)
+		MCS_REPLY
+		: "%rcx", "%rbx", "r11", "memory"
+	);
+}</pre></td></tr></table></p>
+</td>
+
+<td>
+	<p><center><table border='0' cellpadding='12'>
+	<tr valign=top><td><nobr><code>RDI</code></td><td>stores</td><td><code>syscall number</code></td></tr>
+	<tr valign=top><td><nobr><code>RSI</code></td><td>stores</td><td><code>message info</code></td></tr>
+	<tr valign=top><td><nobr><code>RDX</code></td><td>stores</td><td><code>capability pointer</code></td></tr>
+	<tr valign=top><td><nobr><code>R10</code></td><td>stores</td><td><code>message reigister 0</code></td></tr>
+	<tr valign=top><td><nobr><code>R8</code></td><td>stores</td><td><code>message reigister 1</code></td></tr>
+	<tr valign=top><td><nobr><code>R9</code></td><td>stores</td><td><code>message reigister 2</code></td></tr>
+	<tr valign=top><td><nobr><code>R15</code></td><td>stores</td><td><code>message reigister 3</code></td>
+	<tr valign=top><td><nobr><code>R12</code></td><td>stores</td><td><code>reply</code> <small>(only used in MCS configuration)</small></td>
+	<tr valign=top><td><nobr><code>IPC Buffer</code></td><td>stores</td><td><code>Other message registers</td>
+	<tr></table></center></p>
+</td></tr>
+
+</table></div>
+</body>
+</html>

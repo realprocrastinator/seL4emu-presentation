@@ -1,0 +1,53 @@
+<html>
+<head><title>2021 Thesis B Presentation (8)</title>
+<link href='slides.css' rel='stylesheet' type='text/css'>
+<script language="JavaScript">
+// <!--
+function getKey(keyStroke) {
+	isNetscape = (navigator.appName.indexOf('Netscape') == 0)
+	eventChooser = (isNetscape) ? keyStroke.which : event.keyCode;
+	which = String.fromCharCode(eventChooser);
+	if (which == ' ') window.location = "slide009.html";
+	if (which == 'n') window.location = "slide009.html";
+	if (which == 'h') window.location = "slide000.html";
+	if (which == 'b') window.location = "slide007.html";
+}
+document.onkeypress = getKey;
+// -->
+</script>
+
+</head>
+<body>
+<a href="slide007.html"><img border=0 alt="[prev]" src="icon/prev.gif"></a>
+<a href="slide001.html"><span style="font-size:14pt;">8</span></a>
+<a href="slide009.html"><img border=0 alt="[next]" src="icon/next.gif"></a>
+
+<div align='center'><table height='95%' width='92%'><tr><td valign='top'>
+<center><h3>seL4 Emulation Runtime Library Implementation</h3></center>
+
+<h4>Modification on seL4runtime</h4>
+
+<p>
+	Emulation library <b>environment setup</b> before entering the <code>main</code> function.
+<ul>
+<li> <b>Obtain the bootinfo</b>
+	<ul>
+		<li><font color='green'>Before kernel passes bootinfo as function arguments.</font></li>
+		<li><font color='red'>Now map bootinfo frame as shared memory to access.</font></li>
+	</li></ul>
+<li> <b>Setup TLS</b>
+	<ul>
+		<li><font color='green'>Before kernel sets up the TLS region.</font></li>
+		<li><font color='red'>Now we set up by ourselves implicitly.</font> <small>(e.g. using <code>FSGSBASE</code> instruction family on x86 if available, otherwise use Linux process control syscalls)</small></li>
+	</li></ul> 
+<li> <b>Emulation library internal setup</b>
+	<ul>
+		<li><font color='green'>Before no such routine.</font></li>
+		<li><font color='red'>Now we initialize the emulation library.</font> <small>(Explain in the next slide)</small>
+	</li></ul> 
+</ul>
+</p>
+
+</td></tr></table></div>
+</body>
+</html>
