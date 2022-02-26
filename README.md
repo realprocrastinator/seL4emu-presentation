@@ -1,4 +1,5 @@
-# seL4-Emu-Docs
+# The seL4 Emualtion Project
+
 A seL4 emulation layer on Linux OS
 
 This repo will contain all the documentions about this project.
